@@ -93,9 +93,10 @@ int main(int argc, char **argv) {
   } else {
     uint8_t *packed_data;
     int packed_data_len;
+    int i;
     packed_data_len = tinreg_pack(&packed_data);
     printf("static uint8_t trie_data[] = {\n");
-    for (int i = 0; i < packed_data_len; i++) {
+    for (i = 0; i < packed_data_len; i++) {
       if (i % 8 == 0) {
         if (i != 0) {
           printf("\n");
