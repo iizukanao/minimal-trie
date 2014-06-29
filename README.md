@@ -9,6 +9,8 @@ minimal-trie is a C library to search a path from a trie with a minimal compiled
 
 ## Preparation
 
+Prepare the trie data before you go into your embedded system.
+
 ### Define a trie with regular expressions
 
 Write a pattern file with the following format:
