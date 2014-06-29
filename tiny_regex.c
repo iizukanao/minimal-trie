@@ -456,60 +456,31 @@ int8_t tinreg_add_pattern(char *pat, uint8_t pat_len, char result) {
       case '(':  // start grouping
         // create a branch here
         push_pnode_stack(&branch_nodes, &num_branch_nodes);
-        //
-        // "1(23)?4" -> 1234, 14
-        // "1(23|32)4" -> 1234, 1324
-        // "1(2|3|4)5" -> 125, 135, 145
-        // "1(2(3|4))?5" -> 1235, 1245, 15
-        // "12|34", 12, 34 ; we don't support | without ( )
+        // we don't support | without surrounding ( )
         break;
       case ')':  // end grouping
-//        printf("pop_pnode_stack\n");
-//        display_stack_item(pnode_stack[pnode_stack_len-1]);
         last_pnodes = pop_pnode_stack(&branch_nodes, &num_branch_nodes);
         if (!last_pnodes) {
           fprintf(stderr, "grouping inconsistency detected at )\n");
           return -1;
         }
-//        printf("last_pnodes:\n");
-//        display_stack_item(last_pnodes);
         if (is_optional) {
-//          printf("merge_pnodes\n");
           // add popped pnodes to branch_nodes
           merge_pnodes(&branch_nodes, &num_branch_nodes, last_pnodes);
         }
-//        printf("free\n");
         FREE(last_pnodes->nodes);
         FREE(last_pnodes);
 #if USE_GRAPH
         can_merge_next = 1;
 #endif
 
-//        tinreg_display_trie();
-//        display_branch_heads(branch_nodes, num_branch_nodes);
         // end branch here
         // also we have to look-ahead '?'
         break;
       case '|':  // OR
         // create a branch starting from last '('
-//        printf("save_group\n");
         save_group(&branch_nodes, &num_branch_nodes);
-//        printf("set_head_to_last_trunk\n");
         set_head_to_last_trunk(&branch_nodes, &num_branch_nodes);
-//        display_branch_heads(branch_nodes, num_branch_nodes);
-//        // first, pop off the last item from the stack
-//        last_pnodes = pop_pnode_stack(); // position of (
-//        if (!last_pnodes) {
-//          fprintf(stderr, "grouping inconsistency detected at |\n");
-//          exit(1);
-//        }
-//        merge_pnodes(&branch_nodes, &num_branch_nodes, last_pnodes);
-//        push_pnode_stack(&branch_nodes, &num_branch_nodes);
-//        // set last_pnodes as head
-//        branch_nodes = last_pnodes->nodes;
-//        num_branch_nodes = last_pnodes->nodes_len;
-////          free(last_pnodes->nodes);
-//        free(last_pnodes);
         break;
       default:
         fprintf(stderr, "error: invalid char '%c' (only numbers allowed) in pattern: %s", c, pat);
