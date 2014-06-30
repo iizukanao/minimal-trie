@@ -80,11 +80,8 @@ To check the parse result, run build_trie with `-s` option:
 
 # Searching
 
-Put trie_data.h, minimal_trie.h, and minimal_trie.c in the include path of your project.
+Put trie_data.h, minimal_trie.h, and minimal_trie.c in your project.
 
-    #include <stdio.h>
-
-    // Include the library
     #include "minimal_trie.h"
 
     // Load the trie data into the variable trie_data
