@@ -2,8 +2,8 @@ minimal-trie is a C library to search a path from a trie with a minimal compiled
 
 # Limitations
 
-- Only digits (0..9) can be used as a pattern
-- Only single char can be used as a result
+- Only digits (0..9) are allowed as a pattern
+- Only single char is allowed as a result for a pattern
 
 # How to use
 
