@@ -1,4 +1,4 @@
-minimal-trie is a C library to search a path from a trie with a minimal compiled code size in exchange for a limited feature set. Suitable for embedded systems.
+minimal-trie is a C library to search a path from a trie with a minimal compiled code size in exchange for a limited feature set.
 
 # Limitations
 
@@ -9,7 +9,7 @@ minimal-trie is a C library to search a path from a trie with a minimal compiled
 
 ## Preparation
 
-Prepare the trie data before you go into your embedded system.
+Prepare the trie data on a UNIX-like system.
 
 ### Define a trie with regular expressions
 
